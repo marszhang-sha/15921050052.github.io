@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>What is singleton pattern? | 油腻中年大叔</title>
+    <meta name="description" content="你想要的这里都没有，你不想要的这里都有">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.5.1/katex.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/github-markdown-css/2.2.1/github-markdown.css">
+    
+    <link rel="preload" href="/assets/css/0.styles.73a37632.css" as="style"><link rel="preload" href="/assets/js/app.a9b2ada6.js" as="script"><link rel="preload" href="/assets/js/12.1721a008.js" as="script"><link rel="prefetch" href="/assets/js/1.d2e2dc02.js"><link rel="prefetch" href="/assets/js/2.8e580b6b.js"><link rel="prefetch" href="/assets/js/3.5ad76f5f.js"><link rel="prefetch" href="/assets/js/4.aa3b70f1.js"><link rel="prefetch" href="/assets/js/5.1d59a08d.js"><link rel="prefetch" href="/assets/js/6.181e5aa5.js"><link rel="prefetch" href="/assets/js/7.683c736a.js"><link rel="prefetch" href="/assets/js/8.45bfda61.js"><link rel="prefetch" href="/assets/js/9.002044dd.js"><link rel="prefetch" href="/assets/js/10.8bc53d36.js"><link rel="prefetch" href="/assets/js/11.50813293.js"><link rel="prefetch" href="/assets/js/13.c52eee2c.js"><link rel="prefetch" href="/assets/js/14.dc0301dd.js"><link rel="prefetch" href="/assets/js/15.6f142d3a.js"><link rel="prefetch" href="/assets/js/16.f0082783.js"><link rel="prefetch" href="/assets/js/17.f9d30e9a.js"><link rel="prefetch" href="/assets/js/18.086adfe7.js"><link rel="prefetch" href="/assets/js/19.da1cbebb.js"><link rel="prefetch" href="/assets/js/20.9b7a236b.js"><link rel="prefetch" href="/assets/js/21.39c9040b.js"><link rel="prefetch" href="/assets/js/22.c32a9191.js"><link rel="prefetch" href="/assets/js/23.6b0e9793.js"><link rel="prefetch" href="/assets/js/24.02f4831b.js"><link rel="prefetch" href="/assets/js/25.2a6a341b.js"><link rel="prefetch" href="/assets/js/26.600d7807.js"><link rel="prefetch" href="/assets/js/27.7a78c585.js"><link rel="prefetch" href="/assets/js/28.2c10157a.js"><link rel="prefetch" href="/assets/js/29.a4aff2d0.js"><link rel="prefetch" href="/assets/js/30.11035490.js"><link rel="prefetch" href="/assets/js/31.8cdf44b2.js"><link rel="prefetch" href="/assets/js/32.e611c0e0.js"><link rel="prefetch" href="/assets/js/33.b7e515e8.js"><link rel="prefetch" href="/assets/js/34.45fa917d.js"><link rel="prefetch" href="/assets/js/35.8e12ba4f.js"><link rel="prefetch" href="/assets/js/36.8ec841ec.js"><link rel="prefetch" href="/assets/js/37.840185cb.js"><link rel="prefetch" href="/assets/js/38.2b9ae659.js"><link rel="prefetch" href="/assets/js/39.526df9c0.js"><link rel="prefetch" href="/assets/js/40.138f4816.js"><link rel="prefetch" href="/assets/js/41.384a9888.js"><link rel="prefetch" href="/assets/js/42.a84f5523.js"><link rel="prefetch" href="/assets/js/43.6582b032.js"><link rel="prefetch" href="/assets/js/44.b894595b.js"><link rel="prefetch" href="/assets/js/45.227ae924.js"><link rel="prefetch" href="/assets/js/46.822fbd93.js"><link rel="prefetch" href="/assets/js/47.114ff897.js"><link rel="prefetch" href="/assets/js/48.4531d71d.js"><link rel="prefetch" href="/assets/js/49.466c421b.js"><link rel="prefetch" href="/assets/js/50.adb74ec0.js"><link rel="prefetch" href="/assets/js/51.ee145da9.js"><link rel="prefetch" href="/assets/js/52.9e6555ec.js"><link rel="prefetch" href="/assets/js/53.d13fb677.js"><link rel="prefetch" href="/assets/js/54.13ab9568.js"><link rel="prefetch" href="/assets/js/55.6b8e6fca.js"><link rel="prefetch" href="/assets/js/56.def6d551.js"><link rel="prefetch" href="/assets/js/57.405f673f.js"><link rel="prefetch" href="/assets/js/58.05f57c05.js"><link rel="prefetch" href="/assets/js/59.95070160.js"><link rel="prefetch" href="/assets/js/60.68ea3b06.js"><link rel="prefetch" href="/assets/js/61.b1f5ecaf.js"><link rel="prefetch" href="/assets/js/62.443a3f36.js"><link rel="prefetch" href="/assets/js/63.dd39d8b8.js"><link rel="prefetch" href="/assets/js/64.445b255c.js"><link rel="prefetch" href="/assets/js/65.78f4be13.js"><link rel="prefetch" href="/assets/js/66.2c5508a1.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.73a37632.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">油腻中年大叔</span></a> <div class="links" style="max-width:nullpx;"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/algorithms/" class="nav-link">算法</a></div><div class="nav-item"><a href="/dart/" class="nav-link">Dart</a></div><div class="nav-item"><a href="/spring/" class="nav-link">spring</a></div><div class="nav-item"><a href="/drools/" class="nav-link">规则和业务流程</a></div><div class="nav-item"><a href="/eip/" class="nav-link">EIP集成工具</a></div><div class="nav-item"><a href="/other/" class="nav-link router-link-active">杂项</a></div><div class="nav-item"><a href="/riding/" class="nav-link">骑行</a></div><div class="nav-item"><a href="/ev3/" class="nav-link">LEGO EV3 </a></div><div class="nav-item"><a href="/mb/" class="nav-link">Micro:bit </a></div><div class="nav-item"><a href="/math/" class="nav-link">小学数学 </a></div><div class="nav-item"><a href="/eng/" class="nav-link">小学英语 </a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <div class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/algorithms/" class="nav-link">算法</a></div><div class="nav-item"><a href="/dart/" class="nav-link">Dart</a></div><div class="nav-item"><a href="/spring/" class="nav-link">spring</a></div><div class="nav-item"><a href="/drools/" class="nav-link">规则和业务流程</a></div><div class="nav-item"><a href="/eip/" class="nav-link">EIP集成工具</a></div><div class="nav-item"><a href="/other/" class="nav-link router-link-active">杂项</a></div><div class="nav-item"><a href="/riding/" class="nav-link">骑行</a></div><div class="nav-item"><a href="/ev3/" class="nav-link">LEGO EV3 </a></div><div class="nav-item"><a href="/mb/" class="nav-link">Micro:bit </a></div><div class="nav-item"><a href="/math/" class="nav-link">小学数学 </a></div><div class="nav-item"><a href="/eng/" class="nav-link">小学英语 </a></div> <!----></nav>  <ul class="sidebar-links"><li><a href="/other/redissearch.html" class="sidebar-link">Redis search with Lua</a></li><li><a href="/other/aws-deploy.html" class="sidebar-link">AWS VPC网络部署参考</a></li><li><a href="/other/singletonAndMultiton.html" class="active sidebar-link">Design Pattern Series: Singleton and Multiton Pattern</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#what-is-singleton-pattern" class="sidebar-link">What is singleton pattern?</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#prerequisites" class="sidebar-link">Prerequisites</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#uses" class="sidebar-link">Uses</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#different-versions" class="sidebar-link">Different Versions</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#standard-single-threaded-environment" class="sidebar-link">Standard Single Threaded Environment:</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#program-explanation" class="sidebar-link">Program explanation</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#concept-explanation" class="sidebar-link">Concept explanation</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#descriptive-explanation" class="sidebar-link">Descriptive explanation</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#disadvantages" class="sidebar-link">Disadvantages</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#multithreaded-environment-thread-safe" class="sidebar-link">Multithreaded Environment: Thread Safe</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#real-time-example" class="sidebar-link">Real time example</a></li><li class="sidebar-sub-header"><a href="/other/singletonAndMultiton.html#multiton-pattern" class="sidebar-link">Multiton Pattern</a></li></ul></li></ul> </div> <div class="page"> <div class="content"><h2 id="what-is-singleton-pattern"><a href="#what-is-singleton-pattern" aria-hidden="true" class="header-anchor">#</a> What is singleton pattern?</h2> <p>The singleton pattern is the design of a class in such a way which restricts the creation of objects outside the class, but the same time comes up with a mean to render its instance when asked by the calling code. The same object is served for any requests.</p> <h2 id="prerequisites"><a href="#prerequisites" aria-hidden="true" class="header-anchor">#</a> Prerequisites</h2> <p>A singleton class should have only one instance, not more than one instance is created.</p> <p>This can be accomplished by setting all constructors to be private so that new instance can not be created outside the class (for eg LogManager log=new LogManager() is not possible)</p> <p>A singleton class should provide a global point of access its instance.</p> <p>This is possible by creating a public static method and this method should return the instance reference of the class. The calling code would be like LogManager logObj=LogManager.GetInstance(). Notice the client code is not using “new” keword instead it uses the public static method “GetInstance” of the class LogManager</p> <h2 id="uses"><a href="#uses" aria-hidden="true" class="header-anchor">#</a> Uses</h2> <p>It saves memory because object is not created on each request because the calling code is not using the “new” keyword to create instance for this class.</p> <p>It can be used in logging, caching, thread pools, configuration settings etc.</p> <h2 id="different-versions"><a href="#different-versions" aria-hidden="true" class="header-anchor">#</a> Different Versions</h2> <p>Many versions of single patterns are available, so choosing wisely based on your requirement is the key in implementing the singleton pattern. Typically the singleton class has only one instance. There could be any number of object references but only one instance of the class exists. The below diagram illustrates the basic idea of singleton</p> <p><img src="/assets/img/singletonmemory.85462543.jpg" alt="An image"></p> <h2 id="standard-single-threaded-environment"><a href="#standard-single-threaded-environment" aria-hidden="true" class="header-anchor">#</a> Standard Single Threaded Environment:</h2> <p>In this context, the application or system is running on one thread and you are very sure that not more than one thread access the Singleton class</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>public class Singleton
+{
+    private static Singleton instance;
+    private Singleton() { }
+    public static Singleton GetInstance()
+    {
+        if (instance == null)
+        {
+            instance = new Singleton();
+        }
+        return instance;
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br></div></div><h2 id="program-explanation"><a href="#program-explanation" aria-hidden="true" class="header-anchor">#</a> Program explanation</h2> <p><img src="/assets/img/singleto_singlethread.ecbf798e.jpg" alt="An image"></p> <h2 id="concept-explanation"><a href="#concept-explanation" aria-hidden="true" class="header-anchor">#</a> Concept explanation</h2> <p><img src="/assets/img/singleto_singlethread1.748e843c.jpg" alt="An image"></p> <h2 id="descriptive-explanation"><a href="#descriptive-explanation" aria-hidden="true" class="header-anchor">#</a> Descriptive explanation</h2> <p><strong>Static member</strong>:</p> <p>It gets memory only once because of static and contains the instance of the Singleton class itself.</p> <p><strong>Private static:</strong></p> <p>It should be initialized and used only inside of the class</p> <p><strong>Private constructor:</strong></p> <p>It restricts the object creation from outside</p> <p><strong>Static factory method:</strong></p> <p>It provides the global point of access to the Singleton object and returns the instance of the singleton class. When this method is called, it checks if an instance of the singleton class is available. If not available, it creates an instance. Otherwise, it returns the same already created object reference of the class.</p> <p><strong>Lazy instantiation:</strong></p> <p>The object creation operation is deferred until the method is called first time by the calling code. This deferring approach is called lazy instantiation. It is generally used when improving performance, reducing database hits, optimized memory uses and minimizing the huge computation are primary considerations in designing or developing the systems</p> <h2 id="disadvantages"><a href="#disadvantages" aria-hidden="true" class="header-anchor">#</a> Disadvantages</h2> <p>There are some trade-offs in this approach. As long as we are sure that there is only one thread accessing singleton object, then we don’t have any issue. The above approach is enough. But in multi-threaded environment, there is a possibility that more than one thread can access the same line of code. Here comes the problem.</p> <p><img src="/assets/img/nonthreadsafe.c96c1332.jpg" alt="An image"></p> <p>It is not safe for multithreaded environments. If two threads enter “if condition” if (instance == null) at the same time, then two instances of Singleton will be created.</p> <h2 id="multithreaded-environment-thread-safe"><a href="#multithreaded-environment-thread-safe" aria-hidden="true" class="header-anchor">#</a> Multithreaded Environment: Thread Safe</h2> <p><strong>Approach 1:Early instance creation</strong></p> <p>The keyword “readonly” enforces that the object can be initialized either at the declaration part or at the construction level. This makes possible the early instance creation. So When the class is first compiled and loaded into AppDomain, that time itself one copy of Singeton memory is created in heap memory because the Singleton instance is declared as “static” and assigned the object reference using new Singleton() in declaration itself.</p> <p><img src="/assets/img/singletonthreadsafemultithreaded.52b7cb17.jpg" alt="An image"></p> <p><strong>Approach 2: Double checked locking, lazy initialization</strong></p> <p>The keyword “lock” is the main player which holds lock on the code to block other threads to enter it the current thread finishes the execution and goes out of the locked block. In java, they call it as “synchronized ”. The keyword volatile ensures that assignment to the instance variable completes before the instance variable can be accessed. This is optional and it provides some extra assurance.</p> <p><img src="/assets/img/singletonthreadsafemultithreadedlazy.caf2798a.jpg" alt="An image"></p> <h2 id="real-time-example"><a href="#real-time-example" aria-hidden="true" class="header-anchor">#</a> Real time example</h2> <div class="language- line-numbers-mode"><pre class="language-text"><code>using System.IO;
+
+using System.Text;
+
+namespace Utility
+{
+    public class Logger
+    {
+        private FileStream fStream;
+        private StreamWriter sWriter;
+        private static readonly Logger _instance = new Logger();
+        public static Logger Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+        private Logger()
+        {
+            fStream = File.OpenWrite(@&quot;c:\logs\log.txt&quot;);
+            sWriter = new StreamWriter(fStream);
+        }
+        public void LogMessage(string msg)
+        {
+            sWriter.WriteLine(msg + &quot; logged at &quot; + DateTime.UtcNow.ToString());
+            sWriter.Flush();
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string logMsg = &quot;testing&quot;;
+            Console.WriteLine(&quot;log message :{0}&quot;, logMsg);
+            Logger.Instance.LogMessage(logMsg);
+            Console.WriteLine(&quot;Message logged successfully&quot;);
+            Console.ReadKey();
+        }
+    }
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br></div></div><h2 id="multiton-pattern"><a href="#multiton-pattern" aria-hidden="true" class="header-anchor">#</a> Multiton Pattern</h2> <p>Multiton pattern is the extended and enhanced version of Singleton pattern. As the name of the patterns says, the Multiton pattern is nothing but a predefined &quot;n&quot; of collection of instances of the class, while Singleton class has only one instance.  The Multiton pattern(class) uses the Hash or Dictionary to group the list of instances. Each instance in the list is paired with respective key. By using key, the corresponding instance is returned to the calling code.</p> <div class="language- line-numbers-mode"><pre class="language-text"><code>using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Utility
+{
+   public sealed class  BackendServer
+   {
+
+       private static readonly Dictionary&lt;int, BackendServer&gt; serverPool = 
+       new Dictionary&lt;int, BackendServer&gt;
+       {
+           {1,new BackendServer() { ServerName=&quot;Server 1&quot;, IPAddress=&quot;121.121.121.121&quot; } },
+           {2,new BackendServer() { ServerName=&quot;Server 2&quot;, IPAddress=&quot;121.125.129.122&quot; } },
+           {3,new BackendServer() { ServerName=&quot;Server 3&quot;, IPAddress=&quot;121.131.121.123&quot; } }
+       };
+       private static readonly object _lock = new object();
+       string ServerName { get; set; }
+       string IPAddress { get; set; }
+
+       public void Display()
+       {
+           Console.WriteLine(&quot;Request received by backend server{0}&quot;, ServerName);
+       }
+       private static readonly Random random = new Random();
+       private static readonly object randomLock = new object();
+       public static BackendServer GetAvailableBackendServer()
+       {
+           lock (randomLock)
+           {
+               int key = random.Next(1,(serverPool.Count+1));
+               return serverPool[key];
+           }
+           
+       }
+   }
+   class LoadBalancer
+   {
+       BackendServer ConnectToAvailableServer()
+       {
+           return BackendServer.GetAvailableBackendServer();
+       }
+       public void SericeRequest()
+       {
+           BackendServer instance=ConnectToAvailableServer();
+           instance.Display();
+       }
+   }
+
+   class ClientProgram
+   {
+       static void Main(string[] args)
+       {
+           LoadBalancer reqObj = new LoadBalancer();
+           for(int i=1;i&lt;=10;i++)
+           reqObj.SericeRequest();
+           Console.ReadKey();
+       }
+   }
+
+}
+</code></pre> <div class="line-numbers-wrapper"><span class="line-number">1</span><br><span class="line-number">2</span><br><span class="line-number">3</span><br><span class="line-number">4</span><br><span class="line-number">5</span><br><span class="line-number">6</span><br><span class="line-number">7</span><br><span class="line-number">8</span><br><span class="line-number">9</span><br><span class="line-number">10</span><br><span class="line-number">11</span><br><span class="line-number">12</span><br><span class="line-number">13</span><br><span class="line-number">14</span><br><span class="line-number">15</span><br><span class="line-number">16</span><br><span class="line-number">17</span><br><span class="line-number">18</span><br><span class="line-number">19</span><br><span class="line-number">20</span><br><span class="line-number">21</span><br><span class="line-number">22</span><br><span class="line-number">23</span><br><span class="line-number">24</span><br><span class="line-number">25</span><br><span class="line-number">26</span><br><span class="line-number">27</span><br><span class="line-number">28</span><br><span class="line-number">29</span><br><span class="line-number">30</span><br><span class="line-number">31</span><br><span class="line-number">32</span><br><span class="line-number">33</span><br><span class="line-number">34</span><br><span class="line-number">35</span><br><span class="line-number">36</span><br><span class="line-number">37</span><br><span class="line-number">38</span><br><span class="line-number">39</span><br><span class="line-number">40</span><br><span class="line-number">41</span><br><span class="line-number">42</span><br><span class="line-number">43</span><br><span class="line-number">44</span><br><span class="line-number">45</span><br><span class="line-number">46</span><br><span class="line-number">47</span><br><span class="line-number">48</span><br><span class="line-number">49</span><br><span class="line-number">50</span><br><span class="line-number">51</span><br><span class="line-number">52</span><br><span class="line-number">53</span><br><span class="line-number">54</span><br><span class="line-number">55</span><br><span class="line-number">56</span><br><span class="line-number">57</span><br><span class="line-number">58</span><br><span class="line-number">59</span><br><span class="line-number">60</span><br><span class="line-number">61</span><br><span class="line-number">62</span><br><span class="line-number">63</span><br><span class="line-number">64</span><br></div></div></div> <div class="page-edit"><!----> <!----></div> <div class="page-nav"><p class="inner"><span class="prev">
+        ←
+        <a href="/other/aws-deploy.html" class="prev">
+          AWS VPC网络部署参考
+        </a></span> <!----></p></div> </div> <!----></div></div>
+    <script src="/assets/js/12.1721a008.js" defer></script><script src="/assets/js/app.a9b2ada6.js" defer></script>
+  </body>
+</html>
